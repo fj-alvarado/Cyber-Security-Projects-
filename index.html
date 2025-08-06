@@ -189,20 +189,16 @@
         const data = await response.json();
 
         // Show another loading state until full results arrive
-        resultsDiv.innerHTML = `
-          <h3>Awaiting Results...</h3>
-          <div id="loading-spinner" style="text-align: center; margin: 1rem;">
-            <div class="spinner" style="
-              border: 6px solid #f3f3f3;
-              border-top: 6px solid #3498db;
-              border-radius: 50%;
-              width: 40px;
-              height: 40px;
-              animation: spin 1s linear infinite;
-              margin: auto;
-            "></div>
-          </div>
-        `;
+        // Display final results
+resultsDiv.innerHTML = `
+  <h3>Scan Results</h3>
+  <p><strong>Title:</strong> ${data.page_title || 'N/A'}</p>
+  <p><strong>Threat Score:</strong> ${data.verdicts ?? 'Unknown'}</p>
+  <p><strong>VirusTotal Score:</strong> ${data.virustotal_score ?? 'Not Available'}</p>
+  <p><strong>Domain Reputation:</strong> ${data.domain_reputation ?? 'Unknown'}</p>
+  <img src="${data.screenshot_url}" alt="Screenshot" style="max-width:100%; margin-top: 1rem;" />
+`;
+
         // (You’d replace the above with logic to render `data` once processed)
       } catch (error) {
         // Show an error message if something went wrong
