@@ -7,113 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Page title shown in browser tab -->
   <title>SOC Automation Tool</title>
-  <style>
-    /* Base styles for the whole page */
-    body {
-      font-family: Arial, sans-serif;        /* Use a clean, readable sans-serif font */
-      background-color: #f5f9ff;             /* Light blue background */
-      margin: 0;                             /* Remove default page margins */
-      padding: 0;                            /* Remove default page padding */
-    }
-
-    /* Header styling */
-    header {
-      background-color: #3a6ea5;             /* Darker blue background */
-      color: white;                          /* White text */
-      padding: 1rem;                         /* Spacing inside header */
-      text-align: center;                    /* Center the header text */
-    }
-
-    /* Navigation bar styling */
-    nav {
-      background-color: #2e5c94;             /* Even darker blue */
-      display: flex;                         /* Use flexbox for horizontal layout */
-      justify-content: center;               /* Center nav links */
-      padding: 0.5rem;                       /* Spacing inside nav */
-    }
-
-    /* Individual navigation link styling */
-    nav a {
-      color: white;                          /* White link text */
-      margin: 0 1rem;                        /* Horizontal space between links */
-      text-decoration: none;                 /* Remove underline */
-      font-weight: bold;                     /* Bold text */
-    }
-
-    /* Hover effect for nav links */
-    nav a:hover {
-      text-decoration: underline;            /* Underline on hover */
-    }
-
-    /* Container for main content */
-    .container {
-      padding: 2rem;                         /* Inner spacing */
-      max-width: 800px;                      /* Limit width for readability */
-      margin: auto;                          /* Center the container */
-    }
-
-    /* Style the form as a vertical stack */
-    form {
-      display: flex;                         /* Flexbox layout */
-      flex-direction: column;                /* Stack inputs vertically */
-      gap: 1rem;                             /* Space between elements */
-    }
-
-    /* Text input styling */
-    input[type="text"] {
-      padding: 0.5rem;                       /* Inner spacing */
-      font-size: 1rem;                       /* Base font size */
-    }
-
-    /* Button styling */
-    button {
-      padding: 0.7rem;                       /* Inner spacing */
-      font-size: 1rem;                       /* Base font size */
-      background-color: #3a6ea5;             /* Match header color */
-      color: white;                          /* White text */
-      border: none;                          /* Remove default border */
-      cursor: pointer;                       /* Pointer cursor on hover */
-    }
-
-    /* Button hover state */
-    button:hover {
-      background-color: #345f8c;             /* Darken button on hover */
-    }
-
-    /* Results panel styling */
-    #results {
-      margin-top: 2rem;                      /* Space above results */
-      padding: 1rem;                         /* Inner spacing */
-      background-color: #e8f0fe;             /* Light background for contrast */
-      border-radius: 8px;                    /* Rounded corners */
-    }
-
-    /* Ensure any images fit within the container */
-    img {
-      max-width: 100%;                       /* Scale down to fit */
-      border-radius: 4px;                    /* Slightly rounded corners */
-    }
-
-    /* Footer styling */
-    footer {
-      background-color: #3a6ea5;             /* Match header/nav */
-      color: white;                          /* White text */
-      text-align: center;                    /* Center the text */
-      padding: 1rem;                         /* Inner spacing */
-      margin-top: 3rem;                      /* Space above footer */
-    }
-
-    /* Keyframes for the loading spinner animation */
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);             /* Start at 0° */
-      }
-      100% {
-        transform: rotate(360deg);           /* End at full rotation */
-      }
-    }
-  </style>
-</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  #urlForm {
+    margin-bottom: 20px;
+  }
+  #results {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+</style>
 
 <body>
   <!-- Page header -->
@@ -177,5 +84,8 @@
       }
     });
   </script>
+
+
+
 </body>
 </html>
