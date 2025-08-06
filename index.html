@@ -1,54 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Define character encoding -->
+  <!-- Ensures text and symbols display correctly -->
   <meta charset="UTF-8" />
-  <!-- Ensure proper scaling on mobile devices -->
+  <!-- Makes your site mobile-friendly -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Page title shown in browser tab -->
   <title>SOC Automation Tool</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-  }
-  #urlForm {
-    margin-bottom: 20px;
-  }
-  #results {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-</style>
-
+</head>
 <body>
-  <!-- Page header -->
-  <header>
-    <h1>SOC Automation - Threat Intel Scanner</h1>
-  </header>
+  <h1>SOC Automation - Threat Intel Scanner</h1>
 
-  <!-- Main navigation links -->
+  <!-- Simple navigation links -->
   <nav>
     <a href="index.html">Home</a>
     <a href="history.html">Scan History</a>
     <a href="about.html">About</a>
   </nav>
 
-  <!-- Main content wrapper -->
-  <div class="container">
-    <!-- Form for user input -->
-    <form id="threat-form">
-      <label for="input">Enter a URL, Domain, or IP Address:</label>
-      <!-- Text field for URL/IP/Domain input -->
-      <input type="text" id="input" name="input" placeholder="e.g., https://example.com" required />
-      <!-- Submit button to trigger scan -->
-      <button type="submit">Scan</button>
-    </form>
+  <!-- User input form -->
+  <form id="threat-form">
+    <input type="text" id="input" placeholder="Enter URL, IP, or Domain" required />
+    <button type="submit">Scan</button>
+  </form>
 
-    <!-- Div where results (or loading) will be displayed -->
-    <div id="results"></div>
-  </div>
+  <!-- Placeholder for scan results -->
+  <div id="results"></div>
 
   <!-- Page footer -->
   <footer>
@@ -56,36 +32,25 @@
   </footer>
 
   <script>
-     document.getElementById("threat-form").addEventListener("submit", async function (e) {
+    // Add a submit event listener to the form
+    document.getElementById("threat-form").addEventListener("submit", async function (e) {
+      // Prevent the default form submission behavior (page reload)
       e.preventDefault();
+
+      // Get the value from the input field
       const input = document.getElementById("input").value;
+
+      // Find the results div to display messages or output
       const resultsDiv = document.getElementById("results");
-      resultsDiv.innerHTML = "<p>Scanning... Please wait.</p>";
 
-      try {
-        const response = await fetch("https://fjalvarado429.app.n8n.cloud/webhook-test/url-submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ input })
-        });
+      // Temporary message while implementation is pending
+      resultsDiv.textContent = "Awaiting implementation...";
 
-        if (!response.ok) throw new Error("Failed to retrieve results");
-
-        const data = await response.json();
-        resultsDiv.innerHTML = `
-          <h3>Scan Results</h3>
-          <p><strong>Input:</strong> ${data.input}</p>
-          <p><strong>VirusTotal Score:</strong> ${data.virustotal_score}</p>
-          <p><strong>Tags:</strong> ${data.urlscan_tags?.join(", ") || "None"}</p>
-          <img src="${data.screenshot_url}" alt="Screenshot" />
-        `;
-      } catch (error) {
-        resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
-      }
+      // 🔧 In the future, this is where you'd:
+      // - Send the input to an API
+      // - Wait for a response
+      // - Display results (e.g., threat score, tags, screenshot)
     });
   </script>
-
-
-
 </body>
 </html>
