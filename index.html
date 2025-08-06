@@ -133,7 +133,7 @@
 
       // Show spinner and Awaiting Results
       resultsDiv.innerHTML = `
-        <h3>Awaiting Results...</h3>
+        <h3>Awaiting Sumbission...</h3>
         <div id="loading-spinner" style="text-align: center; margin: 1rem;">
           <div class="spinner" style="
             border: 6px solid #f3f3f3;
@@ -159,11 +159,18 @@
         const data = await response.json();
 
         resultsDiv.innerHTML = `
-          <h3>Scan Results</h3>
-          <p><strong>Input:</strong> ${data.input}</p>
-          <p><strong>VirusTotal Score:</strong> ${data.virustotal_score}</p>
-          <p><strong>Tags:</strong> ${data.urlscan_tags?.join(", ") || "None"}</p>
-          <img src="${data.screenshot_url}" alt="Screenshot" />
+          <h3>Awaiting Results...</h3>
+        <div id="loading-spinner" style="text-align: center; margin: 1rem;">
+          <div class="spinner" style="
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: auto;
+          "></div>
+        </div>
         `;
       } catch (error) {
         resultsDiv.innerHTML = `<p style="color:red;"><strong>Error:</strong> ${error.message}</p>`;
