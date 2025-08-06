@@ -1,181 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- Define character encoding -->
-  <meta charset="UTF-8" />
-  <!-- Ensure proper scaling on mobile devices -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Page title shown in browser tab -->
-  <title>SOC Automation Tool</title>
-  <style>
-    /* Base styles for the whole page */
-    body {
-      font-family: Arial, sans-serif;        /* Use a clean, readable sans-serif font */
-      background-color: #f5f9ff;             /* Light blue background */
-      margin: 0;                             /* Remove default page margins */
-      padding: 0;                            /* Remove default page padding */
-    }
+<form id="urlForm">
+  <input type="text" name="url" placeholder="Enter URL to scan" />
+  <button type="submit">Scan</button>
+</form>
 
-    /* Header styling */
-    header {
-      background-color: #3a6ea5;             /* Darker blue background */
-      color: white;                          /* White text */
-      padding: 1rem;                         /* Spacing inside header */
-      text-align: center;                    /* Center the header text */
-    }
+<div id="results">Waiting for scan...</div>
 
-    /* Navigation bar styling */
-    nav {
-      background-color: #2e5c94;             /* Even darker blue */
-      display: flex;                         /* Use flexbox for horizontal layout */
-      justify-content: center;               /* Center nav links */
-      padding: 0.5rem;                       /* Spacing inside nav */
-    }
+<script>
+document.getElementById("urlForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const url = e.target.url.value;
 
-    /* Individual navigation link styling */
-    nav a {
-      color: white;                          /* White link text */
-      margin: 0 1rem;                        /* Horizontal space between links */
-      text-decoration: none;                 /* Remove underline */
-      font-weight: bold;                     /* Bold text */
-    }
+  const response = await fetch("https://your-n8n-subdomain.n8n.cloud/webhook/scan-url", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url: url })
+  });
 
-    /* Hover effect for nav links */
-    nav a:hover {
-      text-decoration: underline;            /* Underline on hover */
-    }
-
-    /* Container for main content */
-    .container {
-      padding: 2rem;                         /* Inner spacing */
-      max-width: 800px;                      /* Limit width for readability */
-      margin: auto;                          /* Center the container */
-    }
-
-    /* Style the form as a vertical stack */
-    form {
-      display: flex;                         /* Flexbox layout */
-      flex-direction: column;                /* Stack inputs vertically */
-      gap: 1rem;                             /* Space between elements */
-    }
-
-    /* Text input styling */
-    input[type="text"] {
-      padding: 0.5rem;                       /* Inner spacing */
-      font-size: 1rem;                       /* Base font size */
-    }
-
-    /* Button styling */
-    button {
-      padding: 0.7rem;                       /* Inner spacing */
-      font-size: 1rem;                       /* Base font size */
-      background-color: #3a6ea5;             /* Match header color */
-      color: white;                          /* White text */
-      border: none;                          /* Remove default border */
-      cursor: pointer;                       /* Pointer cursor on hover */
-    }
-
-    /* Button hover state */
-    button:hover {
-      background-color: #345f8c;             /* Darken button on hover */
-    }
-
-    /* Results panel styling */
-    #results {
-      margin-top: 2rem;                      /* Space above results */
-      padding: 1rem;                         /* Inner spacing */
-      background-color: #e8f0fe;             /* Light background for contrast */
-      border-radius: 8px;                    /* Rounded corners */
-    }
-
-    /* Ensure any images fit within the container */
-    img {
-      max-width: 100%;                       /* Scale down to fit */
-      border-radius: 4px;                    /* Slightly rounded corners */
-    }
-
-    /* Footer styling */
-    footer {
-      background-color: #3a6ea5;             /* Match header/nav */
-      color: white;                          /* White text */
-      text-align: center;                    /* Center the text */
-      padding: 1rem;                         /* Inner spacing */
-      margin-top: 3rem;                      /* Space above footer */
-    }
-
-    /* Keyframes for the loading spinner animation */
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);             /* Start at 0° */
-      }
-      100% {
-        transform: rotate(360deg);           /* End at full rotation */
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <!-- Page header -->
-  <header>
-    <h1>SOC Automation - Threat Intel Scanner</h1>
-  </header>
-
-  <!-- Main navigation links -->
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="history.html">Scan History</a>
-    <a href="about.html">About</a>
-  </nav>
-
-  <!-- Main content wrapper -->
-  <div class="container">
-    <!-- Form for user input -->
-    <form id="threat-form">
-      <label for="input">Enter a URL, Domain, or IP Address:</label>
-      <!-- Text field for URL/IP/Domain input -->
-      <input type="text" id="input" name="input" placeholder="e.g., https://example.com" required />
-      <!-- Submit button to trigger scan -->
-      <button type="submit">Scan</button>
-    </form>
-
-    <!-- Div where results (or loading) will be displayed -->
-    <div id="results"></div>
-  </div>
-
-  <!-- Page footer -->
-  <footer>
-    Creator - Fernando J. Alvarado
-  </footer>
-
-  <script>
-     document.getElementById("threat-form").addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const input = document.getElementById("input").value;
-      const resultsDiv = document.getElementById("results");
-      resultsDiv.innerHTML = "<p>Scanning... Please wait.</p>";
-
-      try {
-        const response = await fetch("https://fjalvarado429.app.n8n.cloud/webhook-test/url-submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ input })
-        });
-
-        if (!response.ok) throw new Error("Failed to retrieve results");
-
-        const data = await response.json();
-        resultsDiv.innerHTML = `
-          <h3>Scan Results</h3>
-          <p><strong>Input:</strong> ${data.input}</p>
-          <p><strong>VirusTotal Score:</strong> ${data.virustotal_score}</p>
-          <p><strong>Tags:</strong> ${data.urlscan_tags?.join(", ") || "None"}</p>
-          <img src="${data.screenshot_url}" alt="Screenshot" />
-        `;
-      } catch (error) {
-        resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
-      }
-    });
-  </script>
-</body>
-</html>
+  const result = await response.json();
+  document.getElementById("results").innerHTML = `
+    <img src="${result.screenshot_url}" alt="Website Screenshot" style="max-width:100%;" />
+  `;
+});
+</script>
