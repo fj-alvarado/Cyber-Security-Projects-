@@ -20,6 +20,24 @@
       text-align: center;
     }
 
+    nav {
+      background-color: #2e5c94;
+      display: flex;
+      justify-content: center;
+      padding: 0.5rem;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
     .container {
       padding: 2rem;
       max-width: 800px;
@@ -61,6 +79,14 @@
       max-width: 100%;
       border-radius: 4px;
     }
+
+    footer {
+      background-color: #3a6ea5;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
   </style>
 </head>
 
@@ -68,6 +94,12 @@
   <header>
     <h1>SOC Automation - Threat Intel Scanner</h1>
   </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="history.html">Scan History</a>
+    <a href="about.html">About</a>
+  </nav>
 
   <div class="container">
     <form id="threat-form">
@@ -78,6 +110,10 @@
 
     <div id="results"></div>
   </div>
+
+  <footer>
+    Content Creator - Fernando J. Alvarado
+  </footer>
 
   <script>
     document.getElementById("threat-form").addEventListener("submit", async function (e) {
