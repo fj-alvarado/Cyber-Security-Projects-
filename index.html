@@ -87,6 +87,16 @@
       padding: 1rem;
       margin-top: 3rem;
     }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 
@@ -120,7 +130,22 @@
       e.preventDefault();
       const input = document.getElementById("input").value;
       const resultsDiv = document.getElementById("results");
-      resultsDiv.innerHTML = "<p>Scanning... Please wait.</p>";
+
+      // Show spinner and Awaiting Results
+      resultsDiv.innerHTML = `
+        <h3>Awaiting Results...</h3>
+        <div id="loading-spinner" style="text-align: center; margin: 1rem;">
+          <div class="spinner" style="
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: auto;
+          "></div>
+        </div>
+      `;
 
       try {
         const response = await fetch("https://fjalvarado429.app.n8n.cloud/webhook-test/url-submit", {
@@ -132,6 +157,7 @@
         if (!response.ok) throw new Error("Failed to retrieve results");
 
         const data = await response.json();
+
         resultsDiv.innerHTML = `
           <h3>Scan Results</h3>
           <p><strong>Input:</strong> ${data.input}</p>
@@ -140,7 +166,7 @@
           <img src="${data.screenshot_url}" alt="Screenshot" />
         `;
       } catch (error) {
-        resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+        resultsDiv.innerHTML = `<p style="color:red;"><strong>Error:</strong> ${error.message}</p>`;
       }
     });
   </script>
